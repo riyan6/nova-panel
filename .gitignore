@@ -1,0 +1,37 @@
+# 忽略 Go 项目的二进制文件和插件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 忽略测试二进制文件（由 go test -c 生成）
+*.test
+
+# 忽略覆盖率工具的输出
+*.out
+
+# 忽略 Go 模块相关文件（如果不需要提交）
+go.sum
+
+# 忽略依赖目录（如果使用 Go modules）
+vendor/
+
+# 忽略 Go 工作空间文件
+go.work
+
+# 忽略 IDE 和编辑器生成的文件
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store  # Mac 系统特有文件
+
+# 忽略临时文件和构建输出
+bin/
+build/
+dist/
+
+# 忽略其他常见临时文件
+*.log
+*.tmp

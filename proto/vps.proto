@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package vps;
+option go_package = "../pb";
+
+service Vps {
+  rpc ReportStatus(stream StatusRequest) returns (StatusAck);
+  rpc SendCommand(CommandRequest) returns (CommandResponse);
+}
+
+message StatusRequest {
+  string agent_id = 1;
+  double cpu_percent = 2;
+  double memory_percent = 3;
+  double upload_speed_kbps = 4;
+  double download_speed_kbps = 5;
+  int64 timestamp = 6;
+  string cpu_model = 7;
+  float disk_percent = 8;
+}
+
+message StatusAck {
+  string message = 1;
+}
+
+message CommandRequest {
+  string agent_id = 1;
+  string command = 2;
+}
+
+message CommandResponse {
+  string result = 1;
+}
