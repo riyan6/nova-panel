@@ -1,4 +1,3 @@
-// internal/webserver/router.go
 package webserver
 
 import (
@@ -12,8 +11,10 @@ func InitRouter() *gin.Engine {
 	api := r.Group("/api/v1")
 	{
 		api.GET("/agents", v1.GetAgentList)
-		// 你可以继续添加 api.POST("/command") 等
 	}
+
+	// 初始化 WebSocket 服务
+	initWebSocket(r)
 
 	return r
 }

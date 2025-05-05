@@ -3,20 +3,42 @@ syntax = "proto3";
 package vps;
 option go_package = "../pb";
 
+import "google/protobuf/timestamp.proto";
+
 service Vps {
   rpc ReportStatus(stream StatusRequest) returns (StatusAck);
   rpc SendCommand(CommandRequest) returns (CommandResponse);
 }
 
 message StatusRequest {
-  string agent_id = 1;
-  double cpu_percent = 2;
-  double memory_percent = 3;
-  double upload_speed_kbps = 4;
-  double download_speed_kbps = 5;
-  int64 timestamp = 6;
-  string cpu_model = 7;
-  float disk_percent = 8;
+  int32 id = 1;
+  HostInfo host = 2;
+  StateInfo state = 3;
+  google.protobuf.Timestamp last_active = 4;
+}
+
+message HostInfo {
+  string platform = 1;
+  repeated string cpu = 2;
+  uint64 mem_total = 3;
+  uint64 disk_total = 4;
+  string arch = 5;
+  int64 boot_time = 6;
+}
+
+message StateInfo {
+  double cpu = 1;
+  uint64 mem_used = 2;
+  uint64 disk_used = 3;
+  uint64 net_in_transfer = 4;
+  uint64 net_out_transfer = 5;
+  uint64 net_in_speed = 6;
+  uint64 net_out_speed = 7;
+  uint64 uptime = 8;
+  double load_5 = 9;
+  int32 tcp_conn_count = 10;
+  int32 udp_conn_count = 11;
+  int32 process_count = 12;
 }
 
 message StatusAck {

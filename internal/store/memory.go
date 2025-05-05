@@ -3,27 +3,31 @@ package store
 import (
 	"sync"
 	"time"
+
+	"nova-panel/pb"
 )
 
 type AgentStatus struct {
-	AgentId      string
-	CpuPercent   float64
-	MemPercent   float64
-	UploadKbps   float64
-	DownloadKbps float64
-	LastUpdated  int64
+	Id         int32
+	Host       *pb.HostInfo
+	State      *pb.StateInfo
+	LastActive time.Time
 }
 
 var (
 	mu     sync.RWMutex
-	agents = make(map[string]*AgentStatus)
+	agents = make(map[int32]*AgentStatus)
 )
 
-func UpdateStatus(status *AgentStatus) {
+func UpdateStatus(status *pb.StatusRequest) {
 	mu.Lock()
 	defer mu.Unlock()
-	status.LastUpdated = time.Now().Unix()
-	agents[status.AgentId] = status
+	agents[status.Id] = &AgentStatus{
+		Id:         status.Id,
+		Host:       status.Host,
+		State:      status.State,
+		LastActive: status.LastActive.AsTime(),
+	}
 }
 
 func GetAllAgents() []*AgentStatus {

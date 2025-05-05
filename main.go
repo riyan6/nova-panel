@@ -1,4 +1,3 @@
-// cmd/server/main.go
 package main
 
 import (
@@ -10,7 +9,7 @@ import (
 	"nova-panel/internal/webserver"
 
 	"google.golang.org/grpc"
-	pb "nova-panel/pb"
+	"nova-panel/pb"
 )
 
 func main() {

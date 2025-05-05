@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent Status WebSocket Test</title>
+</head>
+<body>
+<h1>Agent Status</h1>
+<pre id="status"></pre>
+<script>
+    const ws = new WebSocket("ws://localhost:8080/ws");
+    ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        document.getElementById("status").textContent = JSON.stringify(data, null, 2);
+    };
+    ws.onclose = function() {
+        console.log("WebSocket 连接关闭");
+    };
+    ws.onerror = function(error) {
+        console.error("WebSocket 错误:", error);
+    };
+</script>
+</body>
+</html>
